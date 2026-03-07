@@ -85,13 +85,13 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <main className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-4 py-10 lg:flex-row lg:gap-0 lg:px-6 lg:py-20">
-        <div className="max-w-2xl flex-1 text-center lg:text-left">
-          <div className="mb-6 flex items-center justify-center gap-2 text-sm font-semibold text-[#36B37E] lg:justify-start">
+        <div className="max-w-2xl flex-1 text-left">
+          <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-[#36B37E]">
             <span className="h-2 w-2 rounded-full bg-[#36B37E]"></span>
             AI-POWERED PACKAGING INNOVATION
           </div>
 
-          <h1 className="mb-6 text-3xl leading-tight font-bold sm:text-4xl lg:text-6xl">
+          <h1 className="mb-6 text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
             The Future of
             <br />
             <span className="text-[#36B37E]">Packaging Design</span>
@@ -99,12 +99,12 @@ export default function LandingPage() {
             <span className="">is AI</span>
           </h1>
 
-          <p className="mb-8 text-lg leading-relaxed text-gray-700 lg:text-xl">
+          <p className="mb-8 text-xl leading-relaxed text-gray-700 lg:text-2xl">
             Order personalized, high-quality custom printed packaging and
             branded boxes your customers will love all-in-one place.
           </p>
 
-          <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row lg:mb-12 lg:justify-start lg:gap-6">
+          <div className="mb-8 flex flex-col justify-start gap-4 sm:flex-row lg:mb-12 lg:gap-6">
             <Button
               style={{ backgroundColor: "#36B37E" }}
               className="h-15 w-full cursor-pointer rounded-lg px-6 py-5 text-xl font-semibold text-white hover:opacity-90 sm:w-64"
@@ -122,7 +122,7 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+          <div className="flex flex-col items-start gap-4 sm:flex-row lg:justify-start">
             <div className="flex items-center gap-2">
               <div className="flex text-[#36B37E]">⭐⭐⭐⭐⭐</div>
               <span className="text-sm text-gray-600 underline">
@@ -189,7 +189,7 @@ export default function LandingPage() {
           <div className="mb-4 text-sm font-semibold text-[#36B37E]">
             WHAT WE OFFER
           </div>
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 lg:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
             We are your best solution for{" "}
             <span className="text-[#36B37E]">Custom Packaging</span>
           </h2>

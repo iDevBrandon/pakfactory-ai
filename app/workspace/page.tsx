@@ -94,9 +94,17 @@ These selections reduce your carbon footprint by approximately 42% compared to s
         {/* Navigation */}
         <nav className="flex-1 p-4 lg:p-6">
           <div className="space-y-4">
-            <div className="border-[#36B37E]-200 bg-[#36B37E]-50 flex items-center gap-3 rounded-lg border p-3">
-              <div className="bg-[#36B37E]-500 h-2 w-2 rounded-full"></div>
-              <span className="text-[#36B37E]-700 font-medium">Projects</span>
+            <div
+              style={{ backgroundColor: "#36B37E1A", borderColor: "#36B37E4D" }}
+              className="flex items-center gap-3 rounded-lg border p-3"
+            >
+              <div
+                style={{ backgroundColor: "#36B37E" }}
+                className="h-2 w-2 rounded-full"
+              ></div>
+              <span style={{ color: "#36B37E" }} className="font-medium">
+                Projects
+              </span>
             </div>
           </div>
         </nav>
@@ -140,7 +148,10 @@ These selections reduce your carbon footprint by approximately 42% compared to s
               </svg>
             </button>
 
-            <div className="bg-[#36B37E]-500 flex h-6 w-6 items-center justify-center rounded">
+            <div
+              style={{ backgroundColor: "#36B37E" }}
+              className="flex h-6 w-6 items-center justify-center rounded"
+            >
               <span className="text-xs text-white">🤖</span>
             </div>
             <h1 className="text-lg font-semibold text-gray-900 lg:text-sm">
@@ -183,15 +194,19 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   className={`flex gap-2 lg:gap-4 ${message.isUser ? "justify-end" : ""}`}
                 >
                   {!message.isUser && (
-                    <div className="bg-[#36B37E]-500 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg lg:h-8 lg:w-8">
+                    <div
+                      style={{ backgroundColor: "#36B37E" }}
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg lg:h-8 lg:w-8"
+                    >
                       <span className="text-xs text-white">🤖</span>
                     </div>
                   )}
 
                   <div
-                    className={`max-w-xs sm:max-w-md lg:max-w-2xl ${message.isUser ? "bg-[#36B37E]-500 text-white" : "border border-gray-200 bg-white text-gray-900 shadow-sm"} rounded-2xl p-3 lg:p-6`}
+                    style={message.isUser ? { backgroundColor: "#36B37E" } : {}}
+                    className={`max-w-xs sm:max-w-md lg:max-w-2xl ${message.isUser ? "text-white" : "border border-gray-200 bg-white text-gray-900 shadow-sm"} rounded-2xl p-3 lg:p-6`}
                   >
-                    <div className="text-sm whitespace-pre-wrap lg:text-base">
+                    <div className="text-base whitespace-pre-wrap lg:text-lg">
                       {message.content}
                     </div>
 
@@ -244,7 +259,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   onChange={(e) => setUserMessage(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                   placeholder="Ask about materials, costs..."
-                  className="focus:ring-[#36B37E]-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-10 text-sm text-gray-900 focus:ring-2 focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-base"
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-10 text-base text-gray-900 focus:ring-2 focus:ring-[#36B37E] focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-lg"
                 />
                 <button
                   onClick={handleSendMessage}
@@ -396,8 +411,8 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                     </div>
                     <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
                       <div
-                        className="bg-[#36B37E]-500 h-1.5 rounded-full lg:h-2"
-                        style={{ width: "85%" }}
+                        className="h-1.5 rounded-full lg:h-2"
+                        style={{ backgroundColor: "#36B37E", width: "85%" }}
                       ></div>
                     </div>
                   </div>
@@ -409,8 +424,8 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                     </div>
                     <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
                       <div
-                        className="bg-[#36B37E]-500 h-1.5 rounded-full lg:h-2"
-                        style={{ width: "94%" }}
+                        className="h-1.5 rounded-full lg:h-2"
+                        style={{ backgroundColor: "#36B37E", width: "94%" }}
                       ></div>
                     </div>
                   </div>
@@ -422,8 +437,8 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                     </div>
                     <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
                       <div
-                        className="bg-[#36B37E]-500 h-1.5 rounded-full lg:h-2"
-                        style={{ width: "72%" }}
+                        className="h-1.5 rounded-full lg:h-2"
+                        style={{ backgroundColor: "#36B37E", width: "72%" }}
                       ></div>
                     </div>
                   </div>
