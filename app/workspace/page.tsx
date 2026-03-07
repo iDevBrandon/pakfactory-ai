@@ -55,7 +55,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
   }
 
   return (
-    <div className="relative flex h-screen overflow-hidden bg-gray-50 text-gray-900">
+    <div className="fixed inset-0 flex h-[100dvh] w-screen overflow-hidden bg-gray-50 text-gray-900">
       {/* Mobile overlay */}
       {(sidebarOpen || rightSidebarOpen) && (
         <div
@@ -116,7 +116,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
       </div>
 
       {/* Main Content */}
-      <div className="flex w-full flex-1 flex-col lg:w-auto">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden lg:w-auto">
         {/* Header */}
         <header className="flex items-center justify-between border-b border-gray-200 bg-white p-4 shadow-sm lg:p-6">
           <div className="flex items-center gap-3">
@@ -172,9 +172,9 @@ These selections reduce your carbon footprint by approximately 42% compared to s
         </header>
 
         {/* Chat Content */}
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex min-h-0 flex-1 overflow-hidden">
           {/* Chat Area */}
-          <div className="flex w-full flex-1 flex-col overflow-hidden">
+          <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
             {/* Messages */}
             <div className="flex-1 space-y-4 overflow-y-auto p-4 lg:space-y-6 lg:p-6">
               {messages.map((message) => (
@@ -236,7 +236,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
             </div>
 
             {/* Input Area */}
-            <div className="bg-white p-4 lg:p-6">
+            <div className="relative z-50 flex-shrink-0 border-t border-gray-200 bg-white p-4 lg:p-6">
               <div className="relative">
                 <input
                   type="text"
@@ -244,21 +244,22 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   onChange={(e) => setUserMessage(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                   placeholder="Ask about materials, costs..."
-                  className="focus:ring-[#36B37E]-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-12 text-sm text-gray-900 focus:ring-2 focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-base"
+                  className="focus:ring-[#36B37E]-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-10 text-sm text-gray-900 focus:ring-2 focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-base"
                 />
                 <button
                   onClick={handleSendMessage}
-                  className="absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-[#36B37E] text-white transition-transform hover:scale-105"
+                  className="absolute top-1/2 right-1.5 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-lg bg-[#36B37E] text-white transition-transform hover:scale-105 lg:right-2.5 lg:h-9 lg:w-9"
                 >
                   <svg
-                    width="16"
-                    height="16"
+                    width="14"
+                    height="14"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="lg:h-4 lg:w-4"
                   >
                     <path d="m22 2-7 20-4-9-9-4Z" />
                     <path d="M22 2 11 13" />

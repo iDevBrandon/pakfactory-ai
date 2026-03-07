@@ -33,6 +33,6 @@ Stream response
 
 - Nextjs
 - Shadcn UI
-- Chat SDK
+- AI SDK
 - Pinecone (Vector Database)
 - Supabase
