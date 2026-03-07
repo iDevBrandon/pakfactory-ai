@@ -36,3 +36,9 @@ Stream response
 - AI SDK
 - Pinecone (Vector Database)
 - Supabase
+
+## Supabase Types
+
+```bash
+npx supabase gen types typescript --project-id "xkgnsouomskjbdzwjpab" --schema public > database.types.ts
+```
