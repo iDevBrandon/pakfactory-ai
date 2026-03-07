@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -56,7 +55,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
   }
 
   return (
-    <div className="relative flex min-h-screen bg-gray-50 text-gray-900">
+    <div className="relative flex h-screen overflow-hidden bg-gray-50 text-gray-900">
       {/* Mobile overlay */}
       {(sidebarOpen || rightSidebarOpen) && (
         <div
@@ -76,7 +75,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
       >
         {/* Header */}
         <div className="border-b border-gray-200 p-4 lg:p-6">
-          <Link href="/" className="mb-6 flex items-center gap-3">
+          <Link href="/" className="flex items-center justify-center gap-3">
             <Image
               src="/image/logo.png"
               alt="PakFactory Logo"
@@ -85,7 +84,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
               className="h-6 w-auto"
             />
             <div>
-              <div className="text-[#36B37E]-600 text-xs font-medium">
+              <div className="text-[#36B37E]-600 text-sm font-semibold">
                 AI CONSULTANT V1.0
               </div>
             </div>
@@ -99,19 +98,11 @@ These selections reduce your carbon footprint by approximately 42% compared to s
               <div className="bg-[#36B37E]-500 h-2 w-2 rounded-full"></div>
               <span className="text-[#36B37E]-700 font-medium">Projects</span>
             </div>
-            <div className="hover:text-[#36B37E]-600 flex cursor-pointer items-center gap-3 p-3 text-gray-600">
-              <div className="h-5 w-5 text-center">📚</div>
-              <span>Library</span>
-            </div>
-            <div className="hover:text-[#36B37E]-600 flex cursor-pointer items-center gap-3 p-3 text-gray-600">
-              <div className="h-5 w-5 text-center">⚙️</div>
-              <span>Settings</span>
-            </div>
           </div>
         </nav>
 
         {/* User Profile */}
-        <div className="border-t border-gray-200 p-4 lg:p-6">
+        <div className="border-t border-gray-200 bg-white p-4 lg:p-6">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-full bg-linear-to-r from-green-400 to-blue-400"></div>
             <div>
@@ -152,7 +143,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
             <div className="bg-[#36B37E]-500 flex h-6 w-6 items-center justify-center rounded">
               <span className="text-xs text-white">🤖</span>
             </div>
-            <h1 className="text-lg font-semibold text-gray-900 lg:text-xl">
+            <h1 className="text-lg font-semibold text-gray-900 lg:text-sm">
               AI Assistant
             </h1>
           </div>
@@ -177,25 +168,13 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                 />
               </svg>
             </button>
-
-            <Button
-              variant="outline"
-              className="border-gray-300 px-2 text-sm text-gray-700 hover:bg-gray-50 lg:px-4 lg:text-base"
-            >
-              <span className="mr-1 lg:mr-2">📤</span>
-              <span className="hidden sm:inline">Share</span>
-            </Button>
-            <Button className="bg-[#36B37E]-500 hover:bg-[#36B37E]-600 px-2 text-sm text-white lg:px-4 lg:text-base">
-              <span className="mr-1 lg:mr-2">📋</span>
-              <span className="hidden sm:inline">Export</span>
-            </Button>
           </div>
         </header>
 
         {/* Chat Content */}
-        <div className="flex flex-1">
+        <div className="flex flex-1 overflow-hidden">
           {/* Chat Area */}
-          <div className="flex w-full flex-1 flex-col">
+          <div className="flex w-full flex-1 flex-col overflow-hidden">
             {/* Messages */}
             <div className="flex-1 space-y-4 overflow-y-auto p-4 lg:space-y-6 lg:p-6">
               {messages.map((message) => (
@@ -257,36 +236,48 @@ These selections reduce your carbon footprint by approximately 42% compared to s
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-gray-200 bg-white p-4 lg:p-6">
-              <div className="flex gap-2 lg:gap-4">
+            <div className="bg-white p-4 lg:p-6">
+              <div className="relative">
                 <input
                   type="text"
                   value={userMessage}
                   onChange={(e) => setUserMessage(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                   placeholder="Ask about materials, costs..."
-                  className="focus:ring-[#36B37E]-500 flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 focus:ring-2 focus:outline-none lg:px-4 lg:py-3 lg:text-base"
+                  className="focus:ring-[#36B37E]-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-12 text-sm text-gray-900 focus:ring-2 focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-base"
                 />
-                <Button
+                <button
                   onClick={handleSendMessage}
-                  className="bg-[#36B37E]-500 hover:bg-[#36B37E]-600 px-4 text-white lg:px-6"
+                  className="absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-[#36B37E] text-white transition-transform hover:scale-105"
                 >
-                  <span className="text-lg lg:text-xl">➤</span>
-                </Button>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
 
           {/* Right Sidebar */}
           <div
-            className={`fixed right-0 z-50 flex h-full w-80 transform flex-col border-l border-gray-200 bg-white transition-transform duration-300 ease-in-out lg:relative ${
+            className={`fixed top-0 right-0 z-50 flex h-full w-80 transform flex-col border-l border-gray-200 bg-white transition-transform duration-300 ease-in-out lg:relative lg:h-screen ${
               rightSidebarOpen
                 ? "translate-x-0"
                 : "translate-x-full lg:translate-x-0"
             }`}
           >
             {/* Technical Analysis */}
-            <div className="p-4 lg:p-6">
+            <div className="flex-1 overflow-y-auto p-4 lg:p-6">
               {/* Mobile close button */}
               <div className="mb-4 flex items-center justify-between lg:mb-0">
                 <div></div>
@@ -326,7 +317,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   <span className="text-sm font-medium text-gray-900 lg:text-base">
                     Source Documents
                   </span>
-                  <span className="bg-[#36B37E]-500 rounded px-2 py-1 text-xs text-white">
+                  <span className="bg-[#36B37E]-500 rounded px-2 py-1 text-xs text-black">
                     RAG
                   </span>
                 </div>
@@ -437,21 +428,6 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Compliance Check */}
-            <div className="mt-auto border-t border-gray-200 p-4 lg:p-6">
-              <div className="mb-3 flex items-center gap-2">
-                <span className="text-[#36B37E]-600 text-base lg:text-lg">
-                  ✅
-                </span>
-                <span className="text-[#36B37E]-700 text-sm font-medium lg:text-base">
-                  COMPLIANCE CHECK
-                </span>
-              </div>
-              <p className="text-xs text-gray-600 italic lg:text-sm">
-                All suggested materials meet EU 2024 Packaging Waste Directives.
-              </p>
             </div>
           </div>
         </div>
