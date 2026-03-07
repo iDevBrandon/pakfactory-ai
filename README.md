@@ -54,17 +54,16 @@ npx supabase gen types typescript --project-id "xkgnsouomskjbdzwjpab" --schema p
 
 ### 2️⃣ Document Text Extraction & Chunking
 
-- [ ] Extract text from various document formats (PDF → text, Word → text, etc.)
-- [ ] Split documents into manageable chunks and store in `document_chunks` table
-- [ ] Each chunk includes:
+- [x] Extract text from various document formats (PDF → text, Word → text, etc.)
+- [x] Split documents into manageable chunks and store in `document_chunks` table
+- [x] Each chunk includes:
   - `content`: Chunk text content
   - `chunk_index`: Position within the document
   - `token_count`: For LLM context calculation
 
 ### 3️⃣ Embedding Generation
 
-- [ ] Convert chunk text to embeddings using OpenAI
-- [ ] Use `text-embedding-3-small` model or Google Vertex AI
+- [ ] Convert chunk text to embeddings using openai/text-embedding-3-large
 - [ ] Use chunk ID as Pinecone vector ID
 
 ### 4️⃣ Vector Database Upload

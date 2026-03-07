@@ -127,6 +127,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Trigger document processing asynchronously
+    import("@/src/lib/document-processor").then(async ({ processDocument }) => {
+      try {
+        await processDocument(document.id)
+        console.log(`Document processing completed for: ${document.id}`)
+      } catch (error) {
+        console.error('Failed to process document:', error)
+      }
+    })
+
     return NextResponse.json({
       id: document.id,
       url: fileUrl,
