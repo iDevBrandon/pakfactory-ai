@@ -91,7 +91,7 @@ export default function LandingPage() {
             AI-POWERED PACKAGING INNOVATION
           </div>
 
-          <h1 className="mb-6 text-3xl sm:text-4xl lg:text-6xl leading-tight font-bold">
+          <h1 className="mb-6 text-3xl leading-tight font-bold sm:text-4xl lg:text-6xl">
             The Future of
             <br />
             <span className="text-[#36B37E]">Packaging Design</span>
@@ -99,30 +99,30 @@ export default function LandingPage() {
             <span className="">is AI</span>
           </h1>
 
-          <p className="mb-8 text-lg lg:text-xl leading-relaxed text-gray-700">
+          <p className="mb-8 text-lg leading-relaxed text-gray-700 lg:text-xl">
             Order personalized, high-quality custom printed packaging and
             branded boxes your customers will love all-in-one place.
           </p>
 
-          <div className="mb-8 lg:mb-12 flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start">
+          <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row lg:mb-12 lg:justify-start lg:gap-6">
             <Button
               style={{ backgroundColor: "#36B37E" }}
-              className="h-15 rounded-lg px-12 py-5 text-xl font-semibold text-white hover:opacity-90"
+              className="h-15 w-full cursor-pointer rounded-lg px-6 py-5 text-xl font-semibold text-white hover:opacity-90 sm:w-64"
             >
               Request a Quote
             </Button>
-            <Link href="/workspace">
+            <Link href="/workspace" className="w-full sm:w-64">
               <Button
                 variant="outline"
                 style={{ borderColor: "#36B37E", color: "#36B37E" }}
-                className="h-15 rounded-lg bg-white px-12 py-5 text-xl font-semibold hover:bg-gray-50"
+                className="h-15 w-full cursor-pointer rounded-lg bg-white px-6 py-5 text-xl font-semibold hover:bg-gray-50"
               >
                 Try AI Assistant
               </Button>
             </Link>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
             <div className="flex items-center gap-2">
               <div className="flex text-[#36B37E]">⭐⭐⭐⭐⭐</div>
               <span className="text-sm text-gray-600 underline">
@@ -136,7 +136,7 @@ export default function LandingPage() {
         </div>
 
         {/* 3D Visualization */}
-        <div className="flex flex-1 justify-center w-full">
+        <div className="flex w-full flex-1 justify-center">
           <div className="relative w-full max-w-md lg:max-w-lg">
             <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-100 shadow-2xl">
               {/* Dot pattern background */}
@@ -184,22 +184,22 @@ export default function LandingPage() {
       </main>
 
       {/* Core Capabilities Section */}
-      <section className="mx-auto max-w-7xl px-4 lg:px-6 py-12 lg:py-20">
-        <div className="mb-12 lg:mb-16 text-center">
+      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-6 lg:py-20">
+        <div className="mb-12 text-center lg:mb-16">
           <div className="mb-4 text-sm font-semibold text-[#36B37E]">
             WHAT WE OFFER
           </div>
-          <h2 className="mb-4 text-2xl lg:text-4xl font-bold text-gray-900">
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 lg:text-4xl">
             We are your best solution for{" "}
             <span className="text-[#36B37E]">Custom Packaging</span>
           </h2>
-          <p className="mx-auto max-w-3xl text-lg lg:text-xl text-gray-700">
+          <p className="mx-auto max-w-3xl text-lg text-gray-700 lg:text-xl">
             Never worry about going to multiple sources to get your dream
             packaging.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {/* AI-Driven Design */}
           <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-lg transition-shadow hover:shadow-xl">
             <div
@@ -284,33 +284,33 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 lg:px-6 py-12 lg:py-20">
+      <section className="px-4 py-12 lg:px-6 lg:py-20">
         <div
           style={{
             borderColor: "#36B37E",
             background: "linear-gradient(to right, #36B37E1A, #36B37E20)",
           }}
-          className="mx-auto max-w-4xl rounded-2xl border p-6 lg:p-12 text-center"
+          className="mx-auto max-w-4xl rounded-2xl border p-6 text-center lg:p-12"
         >
-          <h2 className="mb-6 text-2xl lg:text-4xl font-bold text-gray-900">
+          <h2 className="mb-6 text-2xl font-bold text-gray-900 lg:text-4xl">
             Ready to create your dream packaging?
           </h2>
-          <p className="mb-8 text-lg lg:text-xl text-gray-700">
+          <p className="mb-8 text-lg text-gray-700 lg:text-xl">
             Join thousands of brands who trust PakFactory for their custom
             packaging needs. Get started today!
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 lg:gap-6">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row lg:gap-6">
             <Button
               style={{ backgroundColor: "#36B37E" }}
-              className="h-12 lg:h-15 rounded-lg px-8 lg:px-12 py-3 lg:py-5 text-lg lg:text-xl font-semibold text-white hover:opacity-90 w-full sm:w-auto"
+              className="h-12 w-full cursor-pointer rounded-lg px-6 py-3 text-lg font-semibold text-white hover:opacity-90 sm:w-64 lg:h-15 lg:px-8 lg:py-5 lg:text-xl"
             >
               Request a Quote
             </Button>
-            <Link href="/workspace" className="w-full sm:w-auto">
+            <Link href="/workspace" className="w-full sm:w-64">
               <Button
                 variant="outline"
                 style={{ borderColor: "#36B37E", color: "#36B37E" }}
-                className="h-12 lg:h-15 rounded-lg bg-white px-8 lg:px-12 py-3 lg:py-5 text-lg lg:text-xl font-semibold hover:bg-gray-50 w-full sm:w-auto"
+                className="h-12 w-full cursor-pointer rounded-lg bg-white px-6 py-3 text-lg font-semibold hover:bg-gray-50 lg:h-15 lg:px-8 lg:py-5 lg:text-xl"
               >
                 Try AI Assistant
               </Button>
@@ -320,9 +320,9 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white px-4 lg:px-6 py-8 lg:py-12">
+      <footer className="border-t border-gray-200 bg-white px-4 py-8 lg:px-6 lg:py-12">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-3">
               <Image
                 src="/image/logo.png"
@@ -344,7 +344,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mb-8 grid gap-6 grid-cols-2 lg:gap-8 lg:grid-cols-4">
+          <div className="mb-8 grid grid-cols-2 gap-6 lg:grid-cols-4 lg:gap-8">
             <div>
               <h4 className="mb-4 font-semibold text-gray-900">PRODUCTS</h4>
               <ul className="space-y-2 text-gray-600">
@@ -427,9 +427,9 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-200 pt-6 lg:pt-8 text-sm text-gray-500">
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-sm text-gray-500 sm:flex-row lg:pt-8">
             <p>© 2024 PakFactory. All rights reserved.</p>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
               <span>🔒 Secure Checkout</span>
               <span>📞 1-888-622-2819</span>
             </div>
