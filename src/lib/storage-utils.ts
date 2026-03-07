@@ -1,12 +1,11 @@
-import { 
-  PutObjectCommand, 
-  GetObjectCommand, 
-  DeleteObjectCommand,
-  ListObjectsV2Command,
-  CreateBucketCommand,
-  HeadBucketCommand 
-} from '@aws-sdk/client-s3';
-import { s3Client, DOCUMENTS_BUCKET } from './storage';
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SECRET_KEY!
+)
+
+export const DOCUMENTS_BUCKET = 'pakfactory';
 
 export interface UploadFileParams {
   key: string;
@@ -23,20 +22,11 @@ export interface FileMetadata {
 }
 
 /**
- * Ensure the documents bucket exists
+ * Ensure the documents bucket exists (bucket should be created in Supabase dashboard)
  */
 export async function ensureBucketExists(bucketName: string = DOCUMENTS_BUCKET): Promise<void> {
-  try {
-    // Check if bucket exists
-    await s3Client.send(new HeadBucketCommand({ Bucket: bucketName }));
-  } catch (error: any) {
-    if (error.name === 'NotFound') {
-      // Create bucket if it doesn't exist
-      await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));
-    } else {
-      throw error;
-    }
-  }
+  // Bucket should be created manually in Supabase dashboard
+  // This function is kept for compatibility but does nothing
 }
 
 /**
@@ -51,23 +41,26 @@ export async function uploadFile({
   // Prefix key with user ID for organization
   const prefixedKey = `${userId}/${key}`;
   
-  await ensureBucketExists();
-  
-  const command = new PutObjectCommand({
-    Bucket: DOCUMENTS_BUCKET,
-    Key: prefixedKey,
-    Body: file,
-    ContentType: contentType,
-    Metadata: {
-      userId,
-      uploadedAt: new Date().toISOString()
-    }
-  });
+  const { data, error } = await supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .upload(prefixedKey, file, {
+      contentType,
+      metadata: {
+        userId,
+        uploadedAt: new Date().toISOString()
+      }
+    });
 
-  await s3Client.send(command);
+  if (error) {
+    throw new Error(`Upload failed: ${error.message}`);
+  }
   
-  // Return the file URL
-  return `https://xkgnsouomskjbdzwjpab.storage.supabase.co/storage/v1/object/public/${DOCUMENTS_BUCKET}/${prefixedKey}`;
+  // Return the public URL
+  const { data: { publicUrl } } = supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .getPublicUrl(prefixedKey);
+    
+  return publicUrl;
 }
 
 /**

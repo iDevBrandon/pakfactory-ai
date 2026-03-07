@@ -12,4 +12,4 @@ export const s3Client = new S3Client({
 });
 
 // Default bucket name for documents
-export const DOCUMENTS_BUCKET = 'documents';
+export const DOCUMENTS_BUCKET = 'pakfactory';

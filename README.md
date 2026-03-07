@@ -42,3 +42,42 @@ Stream response
 ```bash
 npx supabase gen types typescript --project-id "xkgnsouomskjbdzwjpab" --schema public > database.types.ts
 ```
+
+## Tasks
+
+### 1️⃣ Document Storage
+
+- [x] Upload original documents to Supabase Storage
+- [x] Link with `documents` table via `file_url` column
+- [x] Support PDF, Word, Markdown, and text files
+- [x] Example: `supabase.storage.from('documents').upload(filePath, file)`
+
+### 2️⃣ Document Text Extraction & Chunking
+
+- [ ] Extract text from various document formats (PDF → text, Word → text, etc.)
+- [ ] Split documents into manageable chunks and store in `document_chunks` table
+- [ ] Each chunk includes:
+  - `content`: Chunk text content
+  - `chunk_index`: Position within the document
+  - `token_count`: For LLM context calculation
+
+### 3️⃣ Embedding Generation
+
+- [ ] Convert chunk text to embeddings using OpenAI
+- [ ] Use `text-embedding-3-small` model or Google Vertex AI
+- [ ] Use chunk ID as Pinecone vector ID
+
+### 4️⃣ Vector Database Upload
+
+- [ ] Upload embeddings to Pinecone
+- [ ] Include metadata:
+  - `user_id`: For multi-tenancy
+  - `document_id`: Source document reference
+  - `chunk_index`: Position ordering
+
+### 5️⃣ RAG Query Implementation
+
+- [ ] Generate embeddings for user questions
+- [ ] Search Pinecone for similar vectors with user filter: `{ user_id: ... }`
+- [ ] Retrieve text content from Supabase using returned chunk IDs
+- [ ] Send context and question to LLM for streaming response

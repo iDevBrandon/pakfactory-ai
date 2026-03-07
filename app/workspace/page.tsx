@@ -1,32 +1,28 @@
 "use client"
 
+import DocumentList from "@/src/components/DocumentList"
+import FileUpload from "@/src/components/FileUpload"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { useDropzone } from "react-dropzone"
 
 export default function WorkspacePage() {
   const [userMessage, setUserMessage] = useState("")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [rightSidebarOpen, setRightSidebarOpen] = useState(false)
+  const [showUpload, setShowUpload] = useState(false)
+  const [droppedFiles, setDroppedFiles] = useState<File[]>([])
+  const [refreshDocuments, setRefreshDocuments] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // For demo purposes - generate unique ID per session
+  const [userId] = useState(() => crypto.randomUUID())
   const [messages, setMessages] = useState([
     {
       id: 1,
       content:
-        "Show me some eco-friendly packaging options for luxury perfumes. I need something that feels premium but meets our 2024 sustainability targets.",
-      isUser: true,
-    },
-    {
-      id: 2,
-      content: `Based on your luxury brand requirements and the "Eco-Luxe 2024" initiative, I recommend the following material matrix for your perfume line:
-
-**Glass Solution**
-100% Post-Consumer Recycled (PCR) glass with a thin-wall mold to reduce weight by 15% without sacrificing the "heft" consumers expect.
-
-**Outer Box**
-FSC-certified uncoated 350gsm paper. Instead of plastic lamination, we use a water-based tactile coating for premium soft-touch finish.
-
-These selections reduce your carbon footprint by approximately 42% compared to standard luxury perfume packaging. Would you like to see the structural templates for these materials?`,
+        "Hello! I'm your AI packaging consultant. How can I help you with your project today? You can ask me about materials, sustainability, or upload your own documents for analysis.",
       isUser: false,
     },
   ])
@@ -66,12 +62,78 @@ These selections reduce your carbon footprint by approximately 42% compared to s
     }, 1000)
   }
 
+  const handleUploadComplete = (
+    files: { id: string; url: string; title: string }[]
+  ) => {
+    // Add upload success message
+    const uploadMessage = {
+      id: messages.length + 1,
+      content: `📎 Successfully uploaded: ${files.map((f) => f.title).join(", ")}`,
+      isUser: true,
+    }
+
+    setMessages((prev) => [...prev, uploadMessage])
+    setRefreshDocuments((prev) => prev + 1)
+    setShowUpload(false)
+
+    // Simulate AI response about processing the document
+    setTimeout(() => {
+      const aiResponse = {
+        id: messages.length + 2,
+        content:
+          "I've received your document and I'm analyzing it now. I'll extract relevant packaging specifications and material data to provide better recommendations.",
+        isUser: false,
+      }
+      setMessages((prev) => [...prev, aiResponse])
+    }, 1000)
+  }
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (acceptedFiles, rejectedFiles) => {
+      // If we're already in upload mode, ignore global drops
+      if (showUpload) return
+
+      // Show warning for rejected files
+      if (rejectedFiles.length > 0) {
+        const rejectedFile = rejectedFiles[0].file
+        const error = rejectedFiles[0].errors[0]
+
+        if (error.code === "file-invalid-type") {
+          alert(
+            `File type not supported: ${rejectedFile.name}\n\nSupported formats: PDF, DOC, DOCX, MD, TXT`
+          )
+        } else if (error.code === "file-too-large") {
+          alert(`File too large: ${rejectedFile.name}\n\nMaximum size: 1MB`)
+        } else {
+          alert(`Upload error: ${error.message}`)
+        }
+        return
+      }
+
+      if (acceptedFiles.length > 0) {
+        setDroppedFiles(acceptedFiles)
+        setShowUpload(true)
+      }
+    },
+    noClick: true,
+    noKeyboard: true,
+    multiple: false,
+    accept: {
+      "application/pdf": [".pdf"],
+      "application/msword": [".doc"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docx"],
+      "text/markdown": [".md"],
+      "text/plain": [".txt"],
+    },
+  })
+
   return (
-    <div className="fixed inset-0 flex h-[100dvh] w-full overflow-hidden bg-white text-gray-900">
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-white text-gray-900">
       {/* Mobile overlay */}
       {(sidebarOpen || rightSidebarOpen) && (
         <div
-          className="bg-opacity-50 fixed inset-0 z-40 bg-black lg:hidden"
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
           onClick={() => {
             setSidebarOpen(false)
             setRightSidebarOpen(false)
@@ -81,7 +143,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
 
       {/* Left Sidebar */}
       <div
-        className={`fixed z-50 flex h-full w-80 transform flex-col border-r border-gray-200 bg-white shadow-sm transition-transform duration-300 ease-in-out lg:relative lg:h-screen ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-80 transform flex-col border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:relative lg:z-auto lg:w-80 lg:shadow-none ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -136,9 +198,41 @@ These selections reduce your carbon footprint by approximately 42% compared to s
       </div>
 
       {/* Main Content */}
-      <div className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden lg:w-auto">
+      <div
+        {...getRootProps()}
+        className="relative flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
+      >
+        <input {...getInputProps()} />
+
+        {/* Dropzone Overlay */}
+        {isDragActive && (
+          <div className="absolute inset-0 z-100 flex animate-in items-center justify-center bg-[#36B37E]/20 backdrop-blur-sm transition-all duration-300 fade-in">
+            <div className="scale-110 transform rounded-2xl border-2 border-dashed border-[#36B37E] bg-white p-8 text-center shadow-2xl">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#36B37E]">
+                <svg
+                  className="h-8 w-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900">
+                Drop to Upload
+              </h3>
+              <p className="text-gray-600">Release to analyze your document</p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
-        <header className="flex h-[73px] items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm lg:h-[89px] lg:px-6">
+        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm lg:h-20 lg:px-6">
           <div className="flex items-center gap-3">
             {/* Mobile menu button */}
             <button
@@ -264,42 +358,106 @@ These selections reduce your carbon footprint by approximately 42% compared to s
             </div>
 
             {/* Input Area */}
-            <div className="relative z-50 flex h-20 flex-shrink-0 items-center border-t border-gray-200 bg-white px-4 pb-[env(safe-area-inset-bottom)] lg:h-24 lg:px-6 lg:pb-0">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  value={userMessage}
-                  onChange={(e) => setUserMessage(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                  placeholder="Ask about materials, costs..."
-                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-10 text-base text-gray-900 focus:ring-2 focus:ring-[#36B37E] focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-lg"
-                />
-                <button
-                  onClick={handleSendMessage}
-                  className="absolute top-1/2 right-1.5 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-lg bg-[#36B37E] text-white transition-transform hover:scale-105 lg:right-2.5 lg:h-9 lg:w-9"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lg:h-4 lg:w-4"
-                  >
-                    <path d="m22 2-7 20-4-9-9-4Z" />
-                    <path d="M22 2 11 13" />
-                  </svg>
-                </button>
-              </div>
+            <div className="border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)]">
+              {/* Upload Mode */}
+              {showUpload ? (
+                <div className="p-4 lg:p-6">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Upload Document
+                    </h3>
+                    <button
+                      onClick={() => setShowUpload(false)}
+                      className="rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <FileUpload
+                    userId={userId}
+                    onUploadComplete={handleUploadComplete}
+                    maxFiles={1}
+                    initialFiles={droppedFiles}
+                  />
+                </div>
+              ) : (
+                /* Chat Mode */
+                <div className="flex h-16 flex-shrink-0 items-center px-4 lg:h-20 lg:px-6">
+                  <div className="relative flex w-full gap-2">
+                    {/* File Upload Button */}
+                    <button
+                      onClick={() => setShowUpload(true)}
+                      className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#36B37E] lg:h-12 lg:w-12"
+                      title="Upload document"
+                    >
+                      <svg
+                        className="h-5 w-5 lg:h-6 lg:w-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                    </button>
+
+                    {/* Text Input */}
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={userMessage}
+                        onChange={(e) => setUserMessage(e.target.value)}
+                        onKeyDown={(e) =>
+                          e.key === "Enter" && handleSendMessage()
+                        }
+                        placeholder="Ask about materials, costs..."
+                        className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 pr-10 text-base text-gray-900 focus:ring-2 focus:ring-[#36B37E] focus:outline-none lg:px-4 lg:py-3 lg:pr-14 lg:text-lg"
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        className="absolute top-1/2 right-1.5 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-lg bg-[#36B37E] text-white transition-transform hover:scale-105 lg:right-2.5 lg:h-9 lg:w-9"
+                      >
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lg:h-4 lg:w-4"
+                        >
+                          <path d="m22 2-7 20-4-9-9-4Z" />
+                          <path d="M22 2 11 13" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Right Sidebar */}
           <div
-            className={`fixed top-0 right-0 z-50 flex h-full w-80 transform flex-col border-l border-gray-200 bg-white transition-transform duration-300 ease-in-out lg:relative lg:h-screen ${
+            className={`fixed inset-y-0 right-0 z-50 flex w-80 transform flex-col border-l border-gray-200 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:relative lg:z-auto lg:w-80 lg:shadow-none ${
               rightSidebarOpen
                 ? "translate-x-0"
                 : "translate-x-full lg:translate-x-0"
@@ -339,42 +497,21 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                 </h3>
               </div>
 
-              {/* Source Documents */}
+              {/* Uploaded Documents */}
               <div className="mb-4 lg:mb-6">
                 <div className="mb-3 flex items-center gap-2">
-                  <div className="bg-[#36B37E]-500 h-3 w-3 rounded lg:h-4 lg:w-4"></div>
-                  <span className="text-sm font-medium text-gray-900 lg:text-base">
-                    Source Documents
+                  <span className="text-[#36B37E]-600 text-base lg:text-lg">
+                    📁
                   </span>
-                  <span className="bg-[#36B37E]-500 rounded px-2 py-1 text-xs text-black">
-                    RAG
+                  <span className="text-sm font-medium text-gray-900 lg:text-base">
+                    Your Documents
                   </span>
                 </div>
-
-                <div className="space-y-2 lg:space-y-3">
-                  <div className="rounded-lg border border-gray-200 bg-gray-50 p-2 text-xs lg:p-3 lg:text-sm">
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="text-gray-600">📄</span>
-                      <span className="text-xs font-medium text-gray-900 lg:text-sm">
-                        LuxeGlass_Sustainability_2024.pdf
-                      </span>
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      Relevant pages: 12-18
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-gray-200 bg-gray-50 p-2 text-xs lg:p-3 lg:text-sm">
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="text-gray-600">📄</span>
-                      <span className="text-xs font-medium text-gray-900 lg:text-sm">
-                        Recycled_Paper_Specs_V4.pdf
-                      </span>
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      Relevant pages: 45
-                    </div>
-                  </div>
+                <div className="max-h-60 overflow-y-auto">
+                  <DocumentList
+                    userId={userId}
+                    refreshTrigger={refreshDocuments}
+                  />
                 </div>
               </div>
 
