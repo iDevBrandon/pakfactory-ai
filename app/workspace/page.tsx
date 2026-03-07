@@ -2,12 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function WorkspacePage() {
   const [userMessage, setUserMessage] = useState("")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [rightSidebarOpen, setRightSidebarOpen] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -29,6 +30,17 @@ These selections reduce your carbon footprint by approximately 42% compared to s
       isUser: false,
     },
   ])
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   const handleSendMessage = () => {
     if (!userMessage.trim()) return
@@ -55,7 +67,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
   }
 
   return (
-    <div className="fixed inset-0 flex h-[100dvh] w-screen overflow-hidden bg-gray-50 text-gray-900">
+    <div className="fixed inset-0 flex h-[100dvh] w-full overflow-hidden bg-white text-gray-900">
       {/* Mobile overlay */}
       {(sidebarOpen || rightSidebarOpen) && (
         <div
@@ -248,10 +260,11 @@ These selections reduce your carbon footprint by approximately 42% compared to s
                   )}
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="relative z-50 flex-shrink-0 border-t border-gray-200 bg-white p-4 lg:p-6">
+            <div className="relative z-50 flex-shrink-0 border-t border-gray-200 bg-white px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:p-6">
               <div className="relative">
                 <input
                   type="text"
