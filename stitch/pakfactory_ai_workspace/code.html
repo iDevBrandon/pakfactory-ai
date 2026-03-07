@@ -1,0 +1,384 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#f27f0d",
+              "background-light": "#f8f7f5",
+              "background-dark": "#221910",
+            },
+            fontFamily: {
+              display: ["Space Grotesk"],
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+          },
+        },
+      }
+    </script>
+    <title>PakFactory AI Consultant Workspace</title>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display overflow-hidden text-slate-900 antialiased dark:text-slate-100"
+  >
+    <div class="flex h-screen w-full">
+      <!-- Left Sidebar -->
+      <aside
+        class="bg-background-light dark:bg-background-dark/50 flex w-64 flex-col border-r border-primary/10"
+      >
+        <div class="flex items-center gap-3 p-6">
+          <div
+            class="text-background-dark flex h-10 w-10 items-center justify-center rounded-lg bg-primary"
+          >
+            <span class="material-symbols-outlined font-bold">package_2</span>
+          </div>
+          <div>
+            <h1 class="text-sm font-bold tracking-tight">PakFactory AI</h1>
+            <p
+              class="text-[10px] font-semibold tracking-widest text-primary uppercase"
+            >
+              Consultant v2.4
+            </p>
+          </div>
+        </div>
+        <nav class="flex-1 space-y-2 px-4 py-4">
+          <a
+            class="flex items-center gap-3 rounded bg-primary/10 px-3 py-2 text-primary"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-xl">folder</span>
+            <span class="text-sm font-medium">Projects</span>
+          </a>
+          <a
+            class="flex items-center gap-3 rounded px-3 py-2 transition-colors hover:bg-primary/5"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-xl">book_5</span>
+            <span class="text-sm font-medium">Library</span>
+          </a>
+          <a
+            class="flex items-center gap-3 rounded px-3 py-2 transition-colors hover:bg-primary/5"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span class="text-sm font-medium">Settings</span>
+          </a>
+        </nav>
+        <div class="mt-auto border-t border-primary/10 p-4">
+          <div
+            class="flex cursor-pointer items-center gap-3 rounded p-2 transition-colors hover:bg-primary/5"
+          >
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20"
+            >
+              <span class="material-symbols-outlined text-sm">person</span>
+            </div>
+            <div class="overflow-hidden">
+              <p class="truncate text-xs font-medium">Lead Designer</p>
+              <p class="text-[10px] opacity-60">Pro Account</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Workspace Area -->
+      <main class="relative flex flex-1 flex-col overflow-hidden">
+        <!-- Header -->
+        <header
+          class="bg-background-light/50 dark:bg-background-dark/50 z-10 flex h-16 items-center justify-between border-b border-primary/10 px-8 backdrop-blur-md"
+        >
+          <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-primary"
+              >analytics</span
+            >
+            <h2 class="text-lg font-bold tracking-tight">
+              Consultation Workspace
+            </h2>
+          </div>
+          <div class="flex items-center gap-3">
+            <button
+              class="flex items-center gap-2 rounded-lg border border-primary/20 px-4 py-2 text-sm font-medium transition-colors hover:bg-primary/5"
+            >
+              <span class="material-symbols-outlined text-sm">share</span>
+              Share
+            </button>
+            <button
+              class="text-background-dark flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold transition-opacity hover:opacity-90"
+            >
+              <span class="material-symbols-outlined text-sm">download</span>
+              Export Design
+            </button>
+          </div>
+        </header>
+        <!-- Chat Content -->
+        <div class="flex-1 space-y-8 overflow-y-auto scroll-smooth p-8">
+          <!-- User Message -->
+          <div class="ml-auto flex max-w-3xl items-start justify-end gap-4">
+            <div class="flex flex-col items-end gap-2">
+              <p
+                class="text-[11px] font-bold tracking-tighter text-primary uppercase"
+              >
+                Senior Designer
+              </p>
+              <div
+                class="rounded-xl border border-primary/20 bg-primary/10 p-4 text-sm leading-relaxed shadow-sm"
+              >
+                Show me some eco-friendly packaging options for luxury perfumes.
+                I need something that feels premium but meets our 2024
+                sustainability targets.
+              </div>
+            </div>
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20"
+            >
+              <span class="material-symbols-outlined">account_circle</span>
+            </div>
+          </div>
+          <!-- AI Message -->
+          <div class="flex max-w-4xl items-start gap-4">
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary shadow-[0_0_15px_rgba(242,127,13,0.3)]"
+            >
+              <span
+                class="material-symbols-outlined text-background-dark font-bold"
+                >auto_awesome</span
+              >
+            </div>
+            <div class="flex flex-col gap-3">
+              <p
+                class="text-[11px] font-bold tracking-tighter text-primary uppercase"
+              >
+                PakFactory AI
+              </p>
+              <div
+                class="bg-background-light rounded-xl border border-primary/10 p-6 text-sm leading-relaxed shadow-xl dark:bg-slate-800/50"
+              >
+                <p class="mb-4">
+                  Based on your luxury brand requirements and the "Eco-Luxe
+                  2024" initiative, I recommend the following material matrix
+                  for your perfume line:
+                </p>
+                <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div
+                    class="rounded-lg border border-primary/20 bg-primary/5 p-3"
+                  >
+                    <h4
+                      class="mb-1 flex items-center gap-2 font-bold text-primary"
+                    >
+                      <span class="material-symbols-outlined text-sm">eco</span>
+                      Glass Solution
+                    </h4>
+                    <p class="text-xs opacity-80">
+                      100% Post-Consumer Recycled (PCR) glass with a thin-wall
+                      mold to reduce weight by 15% without sacrificing the
+                      'heft' consumers expect.
+                    </p>
+                  </div>
+                  <div
+                    class="rounded-lg border border-primary/20 bg-primary/5 p-3"
+                  >
+                    <h4
+                      class="mb-1 flex items-center gap-2 font-bold text-primary"
+                    >
+                      <span class="material-symbols-outlined text-sm"
+                        >description</span
+                      >
+                      Outer Box
+                    </h4>
+                    <p class="text-xs opacity-80">
+                      FSC-certified uncoated 350gsm paper. Instead of plastic
+                      lamination, we use a water-based tactile coating for a
+                      premium soft-touch finish.
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  These selections reduce your carbon footprint by approximately
+                  42% compared to standard luxury perfume packaging. Would you
+                  like to see the structural templates for these materials?
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Input Bar -->
+        <div class="p-8">
+          <div class="relative mx-auto max-w-4xl">
+            <input
+              class="bg-background-light w-full rounded-xl border border-primary/20 py-4 pr-16 pl-6 shadow-2xl outline-none placeholder:text-slate-400 focus:border-transparent focus:ring-2 focus:ring-primary dark:bg-slate-800 dark:placeholder:text-slate-500"
+              placeholder="Ask about materials, structures, or costs..."
+              type="text"
+            />
+            <button
+              class="text-background-dark absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-primary transition-transform hover:scale-105"
+            >
+              <span class="material-symbols-outlined">send</span>
+            </button>
+          </div>
+        </div>
+      </main>
+      <!-- Right Sidebar (Technical Panel) -->
+      <aside
+        class="bg-background-light dark:bg-background-dark/50 flex w-80 flex-col overflow-y-auto border-l border-primary/10"
+      >
+        <div class="p-6">
+          <h3
+            class="mb-6 text-xs font-bold tracking-widest text-primary uppercase"
+          >
+            Technical Analysis
+          </h3>
+          <!-- Source Documents -->
+          <div class="mb-8">
+            <div class="mb-4 flex items-center justify-between">
+              <h4 class="flex items-center gap-2 text-sm font-bold">
+                <span class="material-symbols-outlined text-lg text-primary"
+                  >source</span
+                >
+                Source Documents
+              </h4>
+              <span
+                class="rounded bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary"
+                >RAG</span
+              >
+            </div>
+            <div class="space-y-3">
+              <div
+                class="group flex cursor-pointer items-center gap-3 rounded border border-primary/10 bg-primary/5 p-3 transition-colors hover:border-primary/40"
+              >
+                <span class="material-symbols-outlined text-sm opacity-60"
+                  >picture_as_pdf</span
+                >
+                <div class="overflow-hidden">
+                  <p class="truncate text-xs font-medium">
+                    LuxeGlass_Sustainability_2024.pdf
+                  </p>
+                  <p class="text-[10px] opacity-40">Relevant page: 12-14</p>
+                </div>
+              </div>
+              <div
+                class="group flex cursor-pointer items-center gap-3 rounded border border-primary/10 bg-primary/5 p-3 transition-colors hover:border-primary/40"
+              >
+                <span class="material-symbols-outlined text-sm opacity-60"
+                  >picture_as_pdf</span
+                >
+                <div class="overflow-hidden">
+                  <p class="truncate text-xs font-medium">
+                    Recycled_Paper_Specs_V4.pdf
+                  </p>
+                  <p class="text-[10px] opacity-40">Relevant page: 45</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Material Specs -->
+          <div class="mb-8">
+            <h4 class="mb-4 flex items-center gap-2 text-sm font-bold">
+              <span class="material-symbols-outlined text-lg text-primary"
+                >category</span
+              >
+              Material Specs
+            </h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between text-xs">
+                <span class="opacity-60">Density</span>
+                <span class="font-mono">2.52 g/cm³</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="opacity-60">Opacity</span>
+                <span class="font-mono">98.5%</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="opacity-60">Moisture Barrier</span>
+                <span class="font-bold text-green-500 uppercase">High</span>
+              </div>
+            </div>
+          </div>
+          <!-- Sustainability Scores -->
+          <div>
+            <h4 class="mb-4 flex items-center gap-2 text-sm font-bold">
+              <span class="material-symbols-outlined text-lg text-primary"
+                >ecg_heart</span
+              >
+              Sustainability Scores
+            </h4>
+            <div class="space-y-6">
+              <div>
+                <div class="mb-2 flex justify-between text-[11px]">
+                  <span class="font-bold tracking-tighter uppercase"
+                    >Carbon Impact</span
+                  >
+                  <span class="font-bold text-primary">88/100</span>
+                </div>
+                <div
+                  class="h-1.5 w-full overflow-hidden rounded-full bg-primary/10"
+                >
+                  <div class="h-full w-[88%] bg-primary"></div>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex justify-between text-[11px]">
+                  <span class="font-bold tracking-tighter uppercase"
+                    >Recyclability</span
+                  >
+                  <span class="font-bold text-primary">94/100</span>
+                </div>
+                <div
+                  class="h-1.5 w-full overflow-hidden rounded-full bg-primary/10"
+                >
+                  <div class="h-full w-[94%] bg-primary"></div>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex justify-between text-[11px]">
+                  <span class="font-bold tracking-tighter uppercase"
+                    >Material Efficiency</span
+                  >
+                  <span class="font-bold text-primary">72/100</span>
+                </div>
+                <div
+                  class="h-1.5 w-full overflow-hidden rounded-full bg-primary/10"
+                >
+                  <div class="h-full w-[72%] bg-primary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-auto border-t border-primary/10 bg-primary/5 p-6">
+          <div
+            class="mb-2 flex items-center gap-2 text-[10px] font-bold text-primary uppercase"
+          >
+            <span class="material-symbols-outlined text-sm">verified</span>
+            Compliance Check
+          </div>
+          <p class="text-[11px] leading-relaxed italic opacity-70">
+            All suggested materials meet EU 2024 Packaging Waste Directives.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </body>
+</html>

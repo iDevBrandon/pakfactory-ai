@@ -1,21 +1,18 @@
-# Next.js template
+# Pakfactory RAG chatbot
 
-This is a Next.js template with shadcn/ui.
+I have implemented a chatbot using Nextjs and Chat SDK that utilizes a Retrieval-Augmented Generation (RAG) pipeline. The goal of this project is to build a conversational interface that helps users design packaging soluctions as an AI powered packing consultant.
 
-## Adding components
+## RAG pipeline workflow
 
-To add components to your app, run the following command:
+1. Document Collection (User query)
+2. Preprocessing / Chunking
+3. Embedding
+4. Vector Database (Pinecone)
+5. Similarity Search
+6. LLM (ChatGPT) for response generation
 
-```bash
-npx shadcn@latest add button
-```
+## Tech Stack
 
-This will place the ui components in the `components` directory.
-
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button";
-```
+- Nextjs
+- Chat SDK
+- Pinecone (Vector Database)

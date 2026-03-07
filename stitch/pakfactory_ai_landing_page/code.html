@@ -1,0 +1,670 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#f27f0d",
+              "background-light": "#f8f7f5",
+              "background-dark": "#221910",
+            },
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Space Grotesk", sans-serif;
+      }
+      .mesh-gradient {
+        background-color: #221910;
+        background-image:
+          radial-gradient(
+            at 0% 0%,
+            rgba(242, 127, 13, 0.15) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(242, 127, 13, 0.1) 0px,
+            transparent 50%
+          );
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark overflow-x-hidden text-slate-900 antialiased dark:text-slate-100"
+  >
+    <div class="group/design-root relative flex min-h-screen flex-col">
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- Navigation -->
+        <header
+          class="flex items-center justify-between border-b border-solid border-primary/20 px-6 py-4 whitespace-nowrap lg:px-20"
+        >
+          <div class="flex items-center gap-3 text-primary">
+            <span class="material-symbols-outlined text-3xl"
+              >deployed_code</span
+            >
+            <h2
+              class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100"
+            >
+              PakFactory AI
+            </h2>
+          </div>
+          <div class="flex flex-1 items-center justify-end gap-10">
+            <nav class="hidden items-center gap-8 md:flex">
+              <a
+                class="text-sm font-medium text-slate-700 transition-colors hover:text-primary dark:text-slate-300"
+                href="#"
+                >Home</a
+              >
+              <a
+                class="text-sm font-medium text-slate-700 transition-colors hover:text-primary dark:text-slate-300"
+                href="#"
+                >Solutions</a
+              >
+              <a
+                class="text-sm font-medium text-slate-700 transition-colors hover:text-primary dark:text-slate-300"
+                href="#"
+                >Materials</a
+              >
+              <a
+                class="text-sm font-medium text-slate-700 transition-colors hover:text-primary dark:text-slate-300"
+                href="#"
+                >Case Studies</a
+              >
+            </nav>
+            <div class="flex gap-3">
+              <button
+                class="flex h-10 min-w-25 cursor-pointer items-center justify-center rounded-lg border border-primary px-4 text-sm font-bold text-primary transition-all hover:bg-primary/10"
+              >
+                <span>Login</span>
+              </button>
+              <button
+                class="text-background-dark flex h-10 min-w-25 cursor-pointer items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold transition-all hover:brightness-110"
+              >
+                <span>Sign Up</span>
+              </button>
+            </div>
+          </div>
+        </header>
+        <main class="flex-1">
+          <!-- Hero Section -->
+          <div class="relative overflow-hidden">
+            <div class="mx-auto max-w-360 px-6 py-16 lg:px-20 lg:py-24">
+              <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+                <div class="z-10 flex flex-col gap-8">
+                  <div
+                    class="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1"
+                  >
+                    <span
+                      class="flex h-2 w-2 animate-pulse rounded-full bg-primary"
+                    ></span>
+                    <span
+                      class="text-xs font-bold tracking-widest text-primary uppercase"
+                      >Next-Gen Industrial Tech</span
+                    >
+                  </div>
+                  <div class="flex flex-col gap-4">
+                    <h1
+                      class="text-5xl leading-[1.1] font-bold tracking-tight text-slate-900 lg:text-7xl dark:text-white"
+                    >
+                      The Future of
+                      <span class="text-primary">Packaging Design</span> is AI
+                    </h1>
+                    <p
+                      class="max-w-xl text-lg leading-relaxed text-slate-600 lg:text-xl dark:text-slate-400"
+                    >
+                      Unlock high-tech industrial packaging solutions with the
+                      power of generative intelligence, RAG compliance, and
+                      material precision.
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-4">
+                    <button
+                      class="text-background-dark flex h-14 min-w-50 cursor-pointer items-center justify-center rounded-lg bg-primary px-8 text-lg font-bold transition-all hover:shadow-[0_0_20px_rgba(242,127,13,0.3)]"
+                    >
+                      Start Free Consultation
+                    </button>
+                    <button
+                      class="flex h-14 min-w-50 cursor-pointer items-center justify-center rounded-lg border border-slate-300 px-8 text-lg font-medium text-slate-900 transition-all hover:bg-slate-100 dark:border-slate-700 dark:text-white dark:hover:bg-slate-800"
+                    >
+                      View Demo
+                    </button>
+                  </div>
+                  <div class="mt-4 flex items-center gap-6">
+                    <div class="flex -space-x-3">
+                      <div
+                        class="border-background-dark flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 bg-slate-500"
+                      >
+                        <img
+                          class="h-full w-full object-cover"
+                          data-alt="Portrait of a male engineer in a suit"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMa3aFOEBCXy0N7qoId7GnsW6Up2QdzTfDLb0ui_2IT8eYAgZnxZ0Fate-Q90mJDX9b6HaP7IXFPCtFdx9MWygXfTY4vMGGc5oUF5WbONRvx8ADMxrvbK9r2N8v3uPMC4FFb1zuqeS3Qqq7TEmA9dIqRL83w7N77ZMrSaH2ms4K0pmgiGWlA93Wowu2DtvWMLIrRGpHncoI8pluBn-9_-4TDt2YfsHn_InAMJaxRldkD6SfefaeW7mMtapqowgO9vMYUfgnH40gTg"
+                        />
+                      </div>
+                      <div
+                        class="border-background-dark flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 bg-slate-500"
+                      >
+                        <img
+                          class="h-full w-full object-cover"
+                          data-alt="Portrait of a female technology specialist"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuApoz77syoHkQMWZ_KOTIvbF91yeFPlCCIQjgKDARyiVRTQRL-jgfo1bJ3fp1lDUmuI_jvNSfUymVudZC358ubmvZgL-LanOyJER7Ot9In87fjz8cATEwwowhIxOv8lQksnSU90ClZ9OG1QLwlj1zpZEGK2Lr8KBgckW-LU_y1F3MsSjQCqhQcLgxB-_iql9zSh_pZV0kQA-Dma-PtuYsL-AISQBjDb__l3BHs9R4NkXfmG9Gp4C_EG9IvX9rVhEjTe3Ik_dtFg5DY"
+                        />
+                      </div>
+                      <div
+                        class="border-background-dark flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 bg-slate-500"
+                      >
+                        <img
+                          class="h-full w-full object-cover"
+                          data-alt="Portrait of a designer in studio"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuArKAIFZ1ADy5pXgid9mq2cPfPdxIZMc050JYeBhVoShMmuVZgOabk4uPyE8pFtF1MV-4qV-7bRpjzF9LFQolN0A6sfOz6VXs73xLs3LvhoTjtGfE3RVO6Hnj7vRc6hSiVk9MBnKp5SSq2wTpZdl71SefV3uO2u0gRHPBVjPPdYHU1730Ym9g8CCsmtGepTMgFjfc4DrhFjmK1GlOoGfGKmPjaej2mlXWe_BVnlZTxmJ-5e2BeNXWoUQgqL6lQtJgu_22u2gsGJ_0M"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="text-sm font-medium text-slate-500 dark:text-slate-400"
+                    >
+                      Trusted by 500+ industrial manufacturers
+                    </p>
+                  </div>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="absolute -inset-1 rounded-xl bg-linear-to-r from-primary/50 to-orange-600/50 opacity-25 blur transition duration-1000 group-hover:opacity-40"
+                  ></div>
+                  <div
+                    class="relative flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 opacity-20"
+                      style="
+                        background-image: radial-gradient(
+                          circle at 2px 2px,
+                          #f27f0d 1px,
+                          transparent 0
+                        );
+                        background-size: 24px 24px;
+                      "
+                    ></div>
+                    <img
+                      class="h-[85%] w-[85%] rounded-lg object-contain"
+                      data-alt="Technical 3D wireframe mesh of a luxury box design"
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgrp6KMSmRyPXePpOhV-JhQxytAMwCyhCZFwxatZc6vfZn3jrw-pG2TroosOPLswxlrw56Hq6o11r2tNLPKntsAvGRhDcBASi3mNRoFqlT6cVbeB2kaAyQBnyqE_OSeMZ0mpFt_XyfFo9GJlxJQqpj6QPZTHVDlw3z5KkRtG4yw0SqLphPwP9XcB3QLKqAod6h9_6mGACYVEcPZucJuaMbTtBxnZwE-71VjZ0NrnSMMeiXoxSTbSKceauZfvXqxPI4CC-M_ULo4ak"
+                    />
+                    <div
+                      class="bg-background-dark/80 absolute right-6 bottom-6 max-w-50 rounded-lg border border-primary/30 p-4 backdrop-blur-md"
+                    >
+                      <p
+                        class="mb-1 text-[10px] font-bold text-primary uppercase"
+                      >
+                        Live Processing
+                      </p>
+                      <div
+                        class="mb-2 h-1 w-full overflow-hidden rounded-full bg-slate-700"
+                      >
+                        <div class="h-full w-2/3 bg-primary"></div>
+                      </div>
+                      <p class="text-xs leading-tight text-slate-100">
+                        Optimizing structural integrity for corrugated
+                        fiberboard...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Features Section -->
+          <div class="bg-slate-50/50 px-6 py-20 lg:px-20 dark:bg-slate-900/30">
+            <div class="mx-auto max-w-360">
+              <div
+                class="mb-16 flex flex-col items-end justify-between gap-6 lg:flex-row"
+              >
+                <div class="max-w-2xl">
+                  <h2
+                    class="mb-3 text-sm font-bold tracking-widest text-primary uppercase"
+                  >
+                    Core Capabilities
+                  </h2>
+                  <h3
+                    class="text-4xl font-bold tracking-tight text-slate-900 lg:text-5xl dark:text-white"
+                  >
+                    Intelligent Packaging Solutions
+                  </h3>
+                </div>
+                <p
+                  class="text-lg leading-relaxed text-slate-600 lg:max-w-md dark:text-slate-400"
+                >
+                  Our industrial-grade AI platform streamlines the entire design
+                  lifecycle, ensuring precision and global compliance.
+                </p>
+              </div>
+              <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <!-- AI-Driven Design -->
+                <div
+                  class="group dark:bg-background-dark rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl dark:border-slate-800"
+                >
+                  <div
+                    class="mb-6 flex size-14 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-110"
+                  >
+                    <span class="material-symbols-outlined text-3xl"
+                      >smart_toy</span
+                    >
+                  </div>
+                  <h4
+                    class="mb-3 text-xl font-bold text-slate-900 dark:text-white"
+                  >
+                    AI-Driven Design
+                  </h4>
+                  <p
+                    class="mb-6 leading-relaxed text-slate-600 dark:text-slate-400"
+                  >
+                    Generative algorithms that create optimized structural
+                    designs in seconds based on your product dimensions and
+                    weight.
+                  </p>
+                  <ul
+                    class="flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-500"
+                  >
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      Auto-CAD generation
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      3D Visualization
+                    </li>
+                  </ul>
+                </div>
+                <!-- Global Standards -->
+                <div
+                  class="group dark:bg-background-dark rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl dark:border-slate-800"
+                >
+                  <div
+                    class="mb-6 flex size-14 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-110"
+                  >
+                    <span class="material-symbols-outlined text-3xl"
+                      >gavel</span
+                    >
+                  </div>
+                  <h4
+                    class="mb-3 text-xl font-bold text-slate-900 dark:text-white"
+                  >
+                    Global Standards (RAG)
+                  </h4>
+                  <p
+                    class="mb-6 leading-relaxed text-slate-600 dark:text-slate-400"
+                  >
+                    Retrieval-Augmented Generation ensures every design meets
+                    international shipping, safety, and hazmat regulations.
+                  </p>
+                  <ul
+                    class="flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-500"
+                  >
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      ISTA Compliance
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      ASTM D4169 validation
+                    </li>
+                  </ul>
+                </div>
+                <!-- Material Intelligence -->
+                <div
+                  class="group dark:bg-background-dark rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl dark:border-slate-800"
+                >
+                  <div
+                    class="mb-6 flex size-14 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-110"
+                  >
+                    <span class="material-symbols-outlined text-3xl"
+                      >layers</span
+                    >
+                  </div>
+                  <h4
+                    class="mb-3 text-xl font-bold text-slate-900 dark:text-white"
+                  >
+                    Material Intelligence
+                  </h4>
+                  <p
+                    class="mb-6 leading-relaxed text-slate-600 dark:text-slate-400"
+                  >
+                    Advanced database of material properties to select the
+                    perfect substrate for durability, cost-efficiency, and
+                    sustainability.
+                  </p>
+                  <ul
+                    class="flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-500"
+                  >
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      Sustainable sourcing
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-lg text-primary"
+                        >check_circle</span
+                      >
+                      Tensile strength analysis
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Call to Action Section -->
+          <div class="px-6 py-20 lg:px-20">
+            <div
+              class="mesh-gradient relative mx-auto max-w-360 overflow-hidden rounded-3xl border border-primary/20 p-12 lg:p-24"
+            >
+              <div
+                class="relative z-10 flex flex-col items-center gap-8 text-center"
+              >
+                <h2
+                  class="max-w-4xl text-4xl leading-tight font-bold tracking-tight text-white lg:text-6xl"
+                >
+                  Ready to revolutionize your packaging workflow?
+                </h2>
+                <p class="max-w-2xl text-lg text-slate-300 lg:text-xl">
+                  Join industry leaders using PakFactory AI to reduce design
+                  lead times by 85% and material waste by up to 30%.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                  <button
+                    class="text-background-dark flex h-14 min-w-60 cursor-pointer items-center justify-center rounded-lg bg-primary px-8 text-lg font-bold transition-all hover:brightness-110"
+                  >
+                    Start Free Consultation
+                  </button>
+                  <button
+                    class="flex h-14 min-w-60 cursor-pointer items-center justify-center rounded-lg border border-white/30 px-8 text-lg font-medium text-white transition-all hover:bg-white/10"
+                  >
+                    Contact Sales
+                  </button>
+                </div>
+              </div>
+              <div
+                class="absolute inset-0 opacity-10"
+                style="
+                  background-image:
+                    linear-gradient(
+                      30deg,
+                      #f27f0d 12%,
+                      transparent 12.5%,
+                      transparent 87%,
+                      #f27f0d 87.5%,
+                      #f27f0d
+                    ),
+                    linear-gradient(
+                      150deg,
+                      #f27f0d 12%,
+                      transparent 12.5%,
+                      transparent 87%,
+                      #f27f0d 87.5%,
+                      #f27f0d
+                    ),
+                    linear-gradient(
+                      30deg,
+                      #f27f0d 12%,
+                      transparent 12.5%,
+                      transparent 87%,
+                      #f27f0d 87.5%,
+                      #f27f0d
+                    ),
+                    linear-gradient(
+                      150deg,
+                      #f27f0d 12%,
+                      transparent 12.5%,
+                      transparent 87%,
+                      #f27f0d 87.5%,
+                      #f27f0d
+                    ),
+                    linear-gradient(
+                      60deg,
+                      #f27f0d77 25%,
+                      transparent 25.5%,
+                      transparent 75%,
+                      #f27f0d77 75%,
+                      #f27f0d77
+                    ),
+                    linear-gradient(
+                      60deg,
+                      #f27f0d77 25%,
+                      transparent 25.5%,
+                      transparent 75%,
+                      #f27f0d77 75%,
+                      #f27f0d77
+                    );
+                  background-size: 80px 140px;
+                  background-position:
+                    0 0,
+                    0 0,
+                    40px 70px,
+                    40px 70px,
+                    0 0,
+                    40px 70px;
+                "
+              ></div>
+            </div>
+          </div>
+        </main>
+        <!-- Footer -->
+        <footer
+          class="bg-background-light dark:bg-background-dark border-t border-slate-200 px-6 py-16 lg:px-20 dark:border-slate-800"
+        >
+          <div
+            class="mx-auto grid max-w-360 grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-6"
+          >
+            <div class="col-span-2 flex flex-col gap-6">
+              <div class="flex items-center gap-2 text-primary">
+                <span class="material-symbols-outlined text-2xl"
+                  >deployed_code</span
+                >
+                <h2
+                  class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100"
+                >
+                  PakFactory AI
+                </h2>
+              </div>
+              <p
+                class="max-w-xs text-sm leading-relaxed text-slate-500 dark:text-slate-400"
+              >
+                Pioneering the intersection of artificial intelligence and
+                industrial structural engineering.
+              </p>
+              <div class="flex gap-4">
+                <a
+                  class="text-slate-400 transition-colors hover:text-primary"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined">share</span>
+                </a>
+                <a
+                  class="text-slate-400 transition-colors hover:text-primary"
+                  href="#"
+                >
+                  <span class="material-symbols-outlined">public</span>
+                </a>
+              </div>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h5
+                class="text-sm font-bold tracking-wider text-slate-900 uppercase dark:text-white"
+              >
+                Product
+              </h5>
+              <nav class="flex flex-col gap-3">
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Design Studio</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >RAG Compliance</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >API Access</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Enterprise</a
+                >
+              </nav>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h5
+                class="text-sm font-bold tracking-wider text-slate-900 uppercase dark:text-white"
+              >
+                Company
+              </h5>
+              <nav class="flex flex-col gap-3">
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >About Us</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Case Studies</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Careers</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >News</a
+                >
+              </nav>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h5
+                class="text-sm font-bold tracking-wider text-slate-900 uppercase dark:text-white"
+              >
+                Support
+              </h5>
+              <nav class="flex flex-col gap-3">
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Help Center</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Security</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Materials Library</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Contact</a
+                >
+              </nav>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h5
+                class="text-sm font-bold tracking-wider text-slate-900 uppercase dark:text-white"
+              >
+                Legal
+              </h5>
+              <nav class="flex flex-col gap-3">
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Privacy Policy</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Terms of Service</a
+                >
+                <a
+                  class="text-sm text-slate-500 transition-colors hover:text-primary"
+                  href="#"
+                  >Compliance</a
+                >
+              </nav>
+            </div>
+          </div>
+          <div
+            class="mx-auto mt-16 flex max-w-360 flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row dark:border-slate-800"
+          >
+            <p class="text-xs text-slate-500">
+              © 2024 PakFactory AI. All rights reserved. Industrial Grade
+              Intelligence.
+            </p>
+            <div class="flex items-center gap-6">
+              <span class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-sm">language</span>
+                English (US)
+              </span>
+              <span class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-sm"
+                  >settings_input_component</span
+                >
+                System Status: Optimal
+              </span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
