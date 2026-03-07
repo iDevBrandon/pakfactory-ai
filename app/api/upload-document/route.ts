@@ -1,3 +1,4 @@
+import { processDocument } from "@/src/lib/document-processor"
 import { generateFileKey, uploadFile } from "@/src/lib/storage-utils"
 import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
@@ -127,15 +128,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Trigger document processing asynchronously
-    import("@/src/lib/document-processor").then(async ({ processDocument }) => {
-      try {
-        await processDocument(document.id)
-        console.log(`Document processing completed for: ${document.id}`)
-      } catch (error) {
-        console.error('Failed to process document:', error)
-      }
-    })
+    // Process document sequentially to ensure embeddings are created
+    console.log(`Starting document processing for: ${document.id}`)
+    let processingResult
+    try {
+      processingResult = await processDocument(document.id)
+      console.log(`Document processing completed:`, processingResult)
+    } catch (error) {
+      console.error("Failed to process document:", error)
+      return NextResponse.json(
+        {
+          error: "Document saved but processing failed",
+          details: error instanceof Error ? error.message : "Unknown error",
+          id: document.id,
+        },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json({
       id: document.id,
@@ -144,6 +153,7 @@ export async function POST(request: NextRequest) {
       size: file.size,
       type: file.type,
       status: "success",
+      processing: processingResult,
     })
   } catch (error) {
     console.error("Upload error:", error)

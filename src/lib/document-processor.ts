@@ -89,18 +89,23 @@ export async function processDocument(documentId: string) {
     }
 
     // Generate embeddings and store in Pinecone
-    console.log("Generating embeddings for chunks using OpenAI API...")
+    console.log(
+      `Generating embeddings for ${chunks.length} chunks using AI Gateway...`
+    )
     try {
       // Process chunks in batches to avoid rate limits
       const batchSize = 10
-      const embeddingBatches = []
+      let totalStored = 0
 
       for (let i = 0; i < chunks.length; i += batchSize) {
         const batchChunks = chunks.slice(i, i + batchSize)
         const batchTexts = batchChunks.map((chunk) => chunk.content)
 
+        console.log(
+          `Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(chunks.length / batchSize)}...`
+        )
+
         // Generate embeddings for the batch using AI Gateway
-        // Use OpenAI text-embedding-3-large and explicitly request 1024 dimensions
         const embedModel = gateway.embeddingModel(
           "openai/text-embedding-3-large"
         )
@@ -108,45 +113,76 @@ export async function processDocument(documentId: string) {
           embed({
             model: embedModel,
             value: text,
-            // Explicitly request 1024 dimensions to match Pinecone index
             providerOptions: {
-              openai: {
-                dimensions: 1024,
-              },
+              openai: { dimensions: 1024 },
             },
           })
         )
+
         const embeddings = await Promise.all(embeddingPromises)
 
-        // Create Pinecone vectors
+        // Create Pinecone vectors with matched IDs from Supabase
         const vectors = batchChunks.map((chunk, index) => {
-          const chunkId = savedChunks?.[i + index]?.id
+          // Find the matching saved chunk from Supabase by index to get its real ID
+          const savedChunk = savedChunks?.find(
+            (sc) => sc.chunk_index === chunk.chunkIndex
+          )
+          const chunkId = savedChunk?.id
+
+          if (!chunkId) {
+            console.error(
+              `Warning: Could not find Supabase ID for chunk index ${chunk.chunkIndex}`
+            )
+          }
+
+          let embedding = embeddings[index].embedding
+
+          // Ensure dimension is exactly 1024
+          if (embedding.length !== 1024) {
+            console.log(
+              `Normalizing embedding from ${embedding.length} to 1024 dimensions...`
+            )
+            if (embedding.length > 1024) {
+              embedding = embedding.slice(0, 1024)
+            } else {
+              embedding = [
+                ...embedding,
+                ...new Array(1024 - embedding.length).fill(0),
+              ]
+            }
+          }
+
           return createEmbeddingVector(
-            `${documentId}_${chunkId}`, // Unique ID combining document and chunk
-            embeddings[index].embedding,
+            `${documentId}_${chunkId || "missing_" + chunk.chunkIndex}`,
+            embedding,
             {
               documentId,
-              chunkId,
+              chunkId: chunkId || "",
               chunkIndex: chunk.chunkIndex,
-              text: chunk.content.substring(0, 500), // Store truncated text for context
+              text: chunk.content.substring(0, 500),
               tokenCount: chunk.tokenCount,
               userId: document.user_id,
             }
           )
         })
 
-        embeddingBatches.push(vectors)
+        await upsertVectors(vectors)
+        totalStored += vectors.length
+        console.log(
+          `Uploaded batch to Pinecone (${totalStored}/${chunks.length} chunks)`
+        )
       }
 
-      // Upload all vectors to Pinecone
-      for (const vectorBatch of embeddingBatches) {
-        await upsertVectors(vectorBatch)
-      }
-
-      console.log(`Successfully stored ${chunks.length} embeddings in Pinecone`)
+      console.log(
+        `Successfully completed Pinecone sync for document ${documentId}`
+      )
     } catch (embeddingError) {
-      console.error("Embedding generation failed:", embeddingError)
-      // Don't fail the entire process if embeddings fail
+      console.error(
+        "Critical failure in embedding/Pinecone pipeline:",
+        embeddingError
+      )
+      // Throwing error here will mark document as failed in the outer catch block
+      throw embeddingError
     }
 
     // Update document with processing results

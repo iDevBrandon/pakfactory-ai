@@ -2,6 +2,8 @@
 
 import DocumentList from "@/src/components/DocumentList"
 import FileUpload from "@/src/components/FileUpload"
+import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport } from "ai"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -18,14 +20,27 @@ export default function WorkspacePage() {
 
   // For demo purposes - generate unique ID per session
   const [userId] = useState(() => crypto.randomUUID())
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      content:
-        "Hello! I'm your AI packaging consultant. How can I help you with your project today? You can ask me about materials, sustainability, or upload your own documents for analysis.",
-      isUser: false,
-    },
-  ])
+  const [selectedDocumentId, setSelectedDocumentId] = useState<
+    string | undefined
+  >(undefined)
+
+  // Use AI SDK for RAG chat - following the pattern in ChatInterface.tsx
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+      body: {
+        documentId: selectedDocumentId,
+      },
+    }),
+    initialMessages: [
+      {
+        id: "welcome",
+        role: "assistant",
+        content:
+          "Hello! I'm your AI packaging consultant. How can I help you with your project today? You can ask me about materials, sustainability, or upload your own documents for analysis.",
+      },
+    ],
+  } as any)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
@@ -41,51 +56,30 @@ export default function WorkspacePage() {
   const handleSendMessage = () => {
     if (!userMessage.trim()) return
 
-    const newUserMessage = {
-      id: messages.length + 1,
-      content: userMessage,
-      isUser: true,
+    // In this version of the SDK, we use sendMessage
+    if (typeof sendMessage === "function") {
+      sendMessage({ text: userMessage })
     }
 
-    setMessages([...messages, newUserMessage])
     setUserMessage("")
-
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = {
-        id: messages.length + 2,
-        content:
-          "I'll analyze your requirements and provide customized packaging recommendations based on our industrial database...",
-        isUser: false,
-      }
-      setMessages((prev) => [...prev, aiResponse])
-    }, 1000)
   }
 
   const handleUploadComplete = (
     files: { id: string; url: string; title: string }[]
   ) => {
-    // Add upload success message
-    const uploadMessage = {
-      id: messages.length + 1,
-      content: `📎 Successfully uploaded: ${files.map((f) => f.title).join(", ")}`,
-      isUser: true,
-    }
-
-    setMessages((prev) => [...prev, uploadMessage])
     setRefreshDocuments((prev) => prev + 1)
     setShowUpload(false)
 
-    // Simulate AI response about processing the document
-    setTimeout(() => {
-      const aiResponse = {
-        id: messages.length + 2,
-        content:
-          "I've received your document and I'm analyzing it now. I'll extract relevant packaging specifications and material data to provide better recommendations.",
-        isUser: false,
-      }
-      setMessages((prev) => [...prev, aiResponse])
-    }, 1000)
+    // Select the first uploaded document for context if none selected
+    if (files.length > 0 && !selectedDocumentId) {
+      setSelectedDocumentId(files[0].id)
+    }
+
+    if (typeof sendMessage === "function") {
+      sendMessage({
+        text: `I've uploaded ${files.length} document(s). Please analyze them.`,
+      })
+    }
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -129,11 +123,11 @@ export default function WorkspacePage() {
   })
 
   return (
-    <div className="flex h-[100dvh] w-full overflow-hidden bg-white text-gray-900">
+    <div className="flex h-[100dvh] w-full items-stretch overflow-hidden bg-white text-gray-900">
       {/* Mobile overlay */}
       {(sidebarOpen || rightSidebarOpen) && (
         <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          className="bg-opacity-50 fixed inset-0 z-40 bg-black lg:hidden"
           onClick={() => {
             setSidebarOpen(false)
             setRightSidebarOpen(false)
@@ -148,7 +142,7 @@ export default function WorkspacePage() {
         }`}
       >
         {/* Header */}
-        <div className="flex h-[73px] items-center border-b border-gray-200 px-4 lg:h-[89px] lg:px-6">
+        <div className="flex h-[64px] flex-shrink-0 items-center border-b border-gray-200 bg-white px-4 lg:h-[80px] lg:px-6">
           <Link href="/" className="flex items-center justify-center gap-3">
             <Image
               src="/image/logo.png"
@@ -184,7 +178,7 @@ export default function WorkspacePage() {
         </nav>
 
         {/* User Profile */}
-        <div className="flex h-20 items-center border-t border-gray-200 bg-white px-4 lg:h-24 lg:px-6">
+        <div className="flex h-16 flex-shrink-0 items-center border-t border-gray-200 bg-white px-4 lg:h-20 lg:px-6">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-full bg-linear-to-r from-green-400 to-blue-400"></div>
             <div>
@@ -202,7 +196,10 @@ export default function WorkspacePage() {
         {...getRootProps()}
         className="relative flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
       >
-        <input {...getInputProps()} />
+        <input
+          {...getInputProps()}
+          className="pointer-events-none absolute opacity-0"
+        />
 
         {/* Dropzone Overlay */}
         {isDragActive && (
@@ -232,7 +229,7 @@ export default function WorkspacePage() {
         )}
 
         {/* Header */}
-        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm lg:h-20 lg:px-6">
+        <div className="flex h-[64px] flex-shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 lg:h-[80px] lg:px-6">
           <div className="flex items-center gap-3">
             {/* Mobile menu button */}
             <button
@@ -286,7 +283,7 @@ export default function WorkspacePage() {
               </svg>
             </button>
           </div>
-        </header>
+        </div>
 
         {/* Chat Content */}
         <div className="flex min-h-0 flex-1 overflow-hidden">
@@ -294,74 +291,74 @@ export default function WorkspacePage() {
           <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
             {/* Messages */}
             <div className="flex-1 space-y-4 overflow-y-auto p-4 lg:space-y-6 lg:p-6">
-              {messages.map((message) => (
+              {/* Initial Greeting (Always Visible) */}
+              <div className="flex gap-2 lg:gap-4">
                 <div
-                  key={message.id}
-                  className={`flex gap-2 lg:gap-4 ${message.isUser ? "justify-end" : ""}`}
+                  style={{ backgroundColor: "#36B37E" }}
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg lg:h-8 lg:w-8"
                 >
-                  {!message.isUser && (
-                    <div
-                      style={{ backgroundColor: "#36B37E" }}
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg lg:h-8 lg:w-8"
-                    >
-                      <span className="text-xs text-white">🤖</span>
-                    </div>
-                  )}
+                  <span className="text-xs text-white">🤖</span>
+                </div>
 
+                <div className="max-w-xs rounded-2xl border border-gray-200 bg-white p-3 text-gray-900 shadow-sm sm:max-w-md lg:max-w-2xl lg:p-6">
+                  <div className="text-base whitespace-pre-wrap lg:text-lg">
+                    Hello! I'm your AI packaging consultant. How can I help you
+                    with your project today? You can ask me about materials,
+                    sustainability, or upload your own documents for analysis.
+                  </div>
+                </div>
+              </div>
+
+              {/* Chat History */}
+              {messages
+                .filter((m: any) => m.id !== "welcome")
+                .map((message: any) => (
                   <div
-                    style={message.isUser ? { backgroundColor: "#36B37E" } : {}}
-                    className={`max-w-xs sm:max-w-md lg:max-w-2xl ${message.isUser ? "text-white" : "border border-gray-200 bg-white text-gray-900 shadow-sm"} rounded-2xl p-3 lg:p-6`}
+                    key={message.id}
+                    className={`flex gap-2 lg:gap-4 ${message.role === "user" ? "justify-end" : ""}`}
                   >
-                    <div className="text-base whitespace-pre-wrap lg:text-lg">
-                      {message.content}
-                    </div>
-
-                    {!message.isUser && message.id === 2 && (
-                      <div className="mt-4 grid grid-cols-1 gap-3 lg:mt-6 lg:grid-cols-2 lg:gap-4">
-                        <div className="bg-[#36B37E]-50 rounded-lg border border-gray-200 p-3 lg:p-4">
-                          <div className="mb-2 flex items-center gap-2">
-                            <span className="text-[#36B37E]-600">🥃</span>
-                            <span className="text-[#36B37E]-700 text-sm font-semibold lg:text-base">
-                              Glass Solution
-                            </span>
-                          </div>
-                          <p className="text-xs text-gray-700 lg:text-sm">
-                            100% Post-Consumer Recycled (PCR) glass with a
-                            thin-wall mold to reduce weight by 15% without
-                            sacrificing the "heft" consumers expect.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#36B37E]-50 rounded-lg border border-gray-200 p-3 lg:p-4">
-                          <div className="mb-2 flex items-center gap-2">
-                            <span className="text-[#36B37E]-600">📦</span>
-                            <span className="text-[#36B37E]-700 text-sm font-semibold lg:text-base">
-                              Outer Box
-                            </span>
-                          </div>
-                          <p className="text-xs text-gray-700 lg:text-sm">
-                            FSC-certified uncoated 350gsm paper. Instead of
-                            plastic lamination, we use a water-based tactile
-                            coating for premium soft-touch finish.
-                          </p>
-                        </div>
+                    {message.role !== "user" && (
+                      <div
+                        style={{ backgroundColor: "#36B37E" }}
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg lg:h-8 lg:w-8"
+                      >
+                        <span className="text-xs text-white">🤖</span>
                       </div>
                     )}
-                  </div>
 
-                  {message.isUser && (
-                    <div className="h-6 w-6 shrink-0 rounded-full bg-linear-to-r from-green-400 to-blue-400 lg:h-8 lg:w-8"></div>
-                  )}
-                </div>
-              ))}
+                    <div
+                      style={
+                        message.role === "user"
+                          ? { backgroundColor: "#36B37E" }
+                          : {}
+                      }
+                      className={`max-w-xs sm:max-w-md lg:max-w-2xl ${message.role === "user" ? "text-white" : "border border-gray-200 bg-white text-gray-900 shadow-sm"} rounded-2xl p-3 lg:p-6`}
+                    >
+                      <div className="text-base whitespace-pre-wrap lg:text-lg">
+                        {(message as any).content ||
+                          (message as any).text ||
+                          (Array.isArray((message as any).parts)
+                            ? (message as any).parts
+                                .filter((p: any) => p.type === "text")
+                                .map((p: any) => p.text)
+                                .join("")
+                            : JSON.stringify(message))}
+                      </div>
+                    </div>
+
+                    {message.role === "user" && (
+                      <div className="h-6 w-6 shrink-0 rounded-full bg-linear-to-r from-green-400 to-blue-400 lg:h-8 lg:w-8"></div>
+                    )}
+                  </div>
+                ))}
               <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)]">
+            <div className="bg-white pb-[env(safe-area-inset-bottom)]">
               {/* Upload Mode */}
               {showUpload ? (
-                <div className="p-4 lg:p-6">
+                <div className="border-t border-gray-200 p-4 lg:p-6">
                   <div className="mb-4 flex items-center justify-between">
                     <h3 className="text-lg font-semibold text-gray-900">
                       Upload Document
@@ -394,7 +391,7 @@ export default function WorkspacePage() {
                 </div>
               ) : (
                 /* Chat Mode */
-                <div className="flex h-16 flex-shrink-0 items-center px-4 lg:h-20 lg:px-6">
+                <div className="flex h-16 flex-shrink-0 items-center border-t border-gray-200 px-4 lg:h-20 lg:px-6">
                   <div className="relative flex w-full gap-2">
                     {/* File Upload Button */}
                     <button
@@ -511,6 +508,7 @@ export default function WorkspacePage() {
                   <DocumentList
                     userId={userId}
                     refreshTrigger={refreshDocuments}
+                    onDocumentSelect={(doc) => setSelectedDocumentId(doc.id)}
                   />
                 </div>
               </div>
@@ -598,6 +596,8 @@ export default function WorkspacePage() {
           </div>
         </div>
       </div>
+
+      {/* Floating RAG Chat Interface removed as it's now integrated */}
     </div>
   )
 }

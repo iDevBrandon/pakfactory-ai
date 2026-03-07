@@ -19,9 +19,13 @@ export interface QueryResponse {
 
 export async function upsertVectors(vectors: PineconeVector[]): Promise<void> {
   try {
+    console.log(
+      `Upserting ${vectors.length} vectors to Pinecone index: ${process.env.PINECONE_INDEX_NAME}...`
+    )
     await pineconeIndex.upsert({
       records: vectors,
     })
+    console.log(`Successfully upserted ${vectors.length} vectors to Pinecone.`)
   } catch (error) {
     console.error("Error upserting vectors to Pinecone:", error)
     throw error
