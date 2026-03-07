@@ -86,7 +86,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
         }`}
       >
         {/* Header */}
-        <div className="border-b border-gray-200 p-4 lg:p-6">
+        <div className="flex h-[73px] items-center border-b border-gray-200 px-4 lg:h-[89px] lg:px-6">
           <Link href="/" className="flex items-center justify-center gap-3">
             <Image
               src="/image/logo.png"
@@ -96,7 +96,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
               className="h-6 w-auto"
             />
             <div>
-              <div className="text-[#36B37E]-600 text-sm font-semibold">
+              <div className="text-sm font-semibold text-[#36B37E]">
                 AI CONSULTANT V1.0
               </div>
             </div>
@@ -122,7 +122,7 @@ These selections reduce your carbon footprint by approximately 42% compared to s
         </nav>
 
         {/* User Profile */}
-        <div className="border-t border-gray-200 bg-white p-4 lg:p-6">
+        <div className="flex h-20 items-center border-t border-gray-200 bg-white px-4 lg:h-24 lg:px-6">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-full bg-linear-to-r from-green-400 to-blue-400"></div>
             <div>
@@ -138,12 +138,12 @@ These selections reduce your carbon footprint by approximately 42% compared to s
       {/* Main Content */}
       <div className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden lg:w-auto">
         {/* Header */}
-        <header className="flex items-center justify-between border-b border-gray-200 bg-white p-4 shadow-sm lg:p-6">
+        <header className="flex h-[73px] items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm lg:h-[89px] lg:px-6">
           <div className="flex items-center gap-3">
             {/* Mobile menu button */}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="hover:text-[#36B37E]-600 rounded-md p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
+              className="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-[#36B37E] lg:hidden"
             >
               <svg
                 className="h-5 w-5"
@@ -264,8 +264,8 @@ These selections reduce your carbon footprint by approximately 42% compared to s
             </div>
 
             {/* Input Area */}
-            <div className="relative z-50 flex-shrink-0 border-t border-gray-200 bg-white px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:p-6">
-              <div className="relative">
+            <div className="relative z-50 flex h-20 flex-shrink-0 items-center border-t border-gray-200 bg-white px-4 pb-[env(safe-area-inset-bottom)] lg:h-24 lg:px-6 lg:pb-0">
+              <div className="relative w-full">
                 <input
                   type="text"
                   value={userMessage}
