@@ -67,56 +67,51 @@ export async function uploadFile({
  * Download a file from Supabase Storage
  */
 export async function downloadFile(key: string): Promise<Buffer> {
-  const command = new GetObjectCommand({
-    Bucket: DOCUMENTS_BUCKET,
-    Key: key
-  });
+  const { data, error } = await supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .download(key);
 
-  const response = await s3Client.send(command);
-  
-  if (!response.Body) {
+  if (error) {
+    throw new Error(`Download failed: ${error.message}`);
+  }
+
+  if (!data) {
     throw new Error('File not found');
   }
 
-  // Convert stream to buffer
-  const chunks: Uint8Array[] = [];
-  const stream = response.Body as any;
-  
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-  
-  return Buffer.concat(chunks);
+  return Buffer.from(await data.arrayBuffer());
 }
 
 /**
  * Delete a file from Supabase Storage
  */
 export async function deleteFile(key: string): Promise<void> {
-  const command = new DeleteObjectCommand({
-    Bucket: DOCUMENTS_BUCKET,
-    Key: key
-  });
+  const { error } = await supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .remove([key]);
 
-  await s3Client.send(command);
+  if (error) {
+    throw new Error(`Delete failed: ${error.message}`);
+  }
 }
 
 /**
  * List files for a specific user
  */
 export async function listUserFiles(userId: string): Promise<FileMetadata[]> {
-  const command = new ListObjectsV2Command({
-    Bucket: DOCUMENTS_BUCKET,
-    Prefix: `${userId}/`
-  });
+  const { data, error } = await supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .list(`${userId}/`);
 
-  const response = await s3Client.send(command);
-  
-  return (response.Contents || []).map(object => ({
-    key: object.Key!,
-    size: object.Size || 0,
-    lastModified: object.LastModified || new Date(),
-    contentType: undefined // Would need separate HeadObject call to get this
+  if (error) {
+    throw new Error(`List failed: ${error.message}`);
+  }
+
+  return (data || []).map(object => ({
+    key: `${userId}/${object.name}`,
+    size: object.metadata?.size || 0,
+    lastModified: new Date(object.updated_at || object.created_at),
+    contentType: object.metadata?.mimetype
   }));
 }
 
