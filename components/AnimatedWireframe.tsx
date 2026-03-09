@@ -186,12 +186,12 @@ export default function AnimatedWireframe() {
 
     const shape3DOptions = [
       "white tulip box",
-      "brown burger box", 
+      "brown burger box",
       "beige sandwich wedge",
       "white cake box",
       "brown tray box",
       "golden crown",
-      "blue sphere"
+      "blue sphere",
     ]
 
     const interval = setInterval(() => {
@@ -313,9 +313,7 @@ export default function AnimatedWireframe() {
           {isGenerating && (
             <div className="mt-2 flex items-center gap-2 text-sm text-gray-600">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#36B37E] border-t-transparent"></div>
-              <span>
-                AI is analyzing your input and generating 3D shape...
-              </span>
+              <span>AI is analyzing your input and generating 3D shape...</span>
             </div>
           )}
 
@@ -339,13 +337,13 @@ export default function AnimatedWireframe() {
             }`}
           >
             {current3DShape && (
-              <div className="h-full w-full rounded-lg overflow-hidden border border-gray-200 bg-gradient-to-br from-gray-50 to-blue-50">
+              <div className="h-full w-full overflow-hidden rounded-lg border border-gray-200 bg-linear-to-br from-gray-50 to-blue-50">
                 <ThreeRenderer
                   vertices={current3DShape.vertices}
                   indices={current3DShape.indices}
                   colors={current3DShape.colors}
                   normals={current3DShape.normals}
-                  className="w-full h-full"
+                  className="h-full w-full"
                 />
               </div>
             )}
@@ -382,7 +380,9 @@ export default function AnimatedWireframe() {
           {current3DShape && !isGenerating && (
             <div className="absolute top-4 right-4 rounded-lg bg-black/70 px-3 py-2 text-sm text-white backdrop-blur-sm">
               <div className="flex items-center gap-2">
-                <span className="text-xs">🔄 Auto-rotating • 🖱️ Drag to control</span>
+                <span className="text-xs">
+                  🔄 Auto-rotating • 🖱️ Drag to control
+                </span>
               </div>
             </div>
           )}
