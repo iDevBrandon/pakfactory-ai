@@ -23,6 +23,8 @@ export default function WorkspacePage() {
   const [selectedDocumentId, setSelectedDocumentId] = useState<
     string | undefined
   >(undefined)
+  const [temperature, setTemperature] = useState(0.4)
+  const [tokenLimit, setTokenLimit] = useState(2048)
 
   // Use AI SDK for RAG chat - following the pattern in ChatInterface.tsx
   const { messages, sendMessage, status } = useChat({
@@ -486,12 +488,118 @@ export default function WorkspacePage() {
               </div>
 
               <div className="mb-4 flex items-center gap-2">
-                <span className="text-[#36B37E]-600 text-base lg:text-lg">
-                  ⚙️
-                </span>
-                <h3 className="text-[#36B37E]-700 text-sm font-semibold lg:text-base">
+                <span className="text-base text-[#36B37E] lg:text-lg">⚙️</span>
+                <h3 className="text-sm font-semibold text-gray-700 lg:text-base">
                   TECHNICAL ANALYSIS
                 </h3>
+              </div>
+
+              {/* Model Configuration */}
+              <div className="mb-4 lg:mb-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="text-base text-[#36B37E] lg:text-lg">
+                    🔧
+                  </span>
+                  <span className="text-sm font-medium text-gray-900 lg:text-base">
+                    Model Settings
+                  </span>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Model Selector */}
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-gray-600">
+                      Model
+                    </label>
+                    <div className="relative">
+                      <select className="w-full appearance-none rounded-lg border border-gray-200 bg-white p-2 pr-8 text-sm focus:border-[#36B37E] focus:ring-2 focus:ring-[#36B37E] focus:outline-none">
+                        <option>gpt-4-turbo</option>
+                        <option>gpt-3.5-turbo</option>
+                        <option>claude-3-sonnet</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <svg
+                          className="h-4 w-4 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Temperature Slider */}
+                  <div>
+                    <div className="mb-1 flex items-center justify-between">
+                      <label className="text-xs font-medium text-gray-600">
+                        Temperature
+                      </label>
+                      <button className="flex h-4 w-4 items-center justify-center rounded-full bg-gray-300 text-xs text-white">
+                        ?
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500">0</span>
+                      <div className="relative flex-1">
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.1"
+                          value={temperature}
+                          onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                          className="slider h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
+                          style={{
+                            background: `linear-gradient(to right, #36B37E 0%, #36B37E ${temperature * 100}%, #e5e7eb ${temperature * 100}%, #e5e7eb 100%)`,
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-gray-500">1</span>
+                      <span className="min-w-[2.5rem] rounded border bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
+                        {temperature}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Token Limit */}
+                  <div>
+                    <div className="mb-1 flex items-center justify-between">
+                      <label className="text-xs font-medium text-gray-600">
+                        Token limit
+                      </label>
+                      <button className="flex h-4 w-4 items-center justify-center rounded-full bg-gray-300 text-xs text-white">
+                        ?
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500">1</span>
+                      <div className="relative flex-1">
+                        <input
+                          type="range"
+                          min="1"
+                          max="2048"
+                          value={tokenLimit}
+                          onChange={(e) => setTokenLimit(parseInt(e.target.value))}
+                          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
+                          style={{
+                            background: `linear-gradient(to right, #36B37E 0%, #36B37E ${((tokenLimit - 1) / 2047) * 100}%, #e5e7eb ${((tokenLimit - 1) / 2047) * 100}%, #e5e7eb 100%)`,
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-gray-500">2048</span>
+                      <span className="min-w-[3rem] rounded border bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
+                        {tokenLimit}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Uploaded Documents */}
@@ -512,92 +620,10 @@ export default function WorkspacePage() {
                   />
                 </div>
               </div>
-
-              {/* Material Specs */}
-              <div className="mb-4 lg:mb-6">
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="text-[#36B37E]-600 text-base lg:text-lg">
-                    🧪
-                  </span>
-                  <span className="text-sm font-medium text-gray-900 lg:text-base">
-                    Material Specs
-                  </span>
-                </div>
-
-                <div className="space-y-2 text-xs lg:space-y-3 lg:text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Density</span>
-                    <span className="text-gray-900">2.52 g/cm³</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Opacity</span>
-                    <span className="text-gray-900">98.5%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Moisture Barrier</span>
-                    <span className="text-[#36B37E]-600 font-medium">HIGH</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sustainability Scores */}
-              <div>
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="text-[#36B37E]-600 text-base lg:text-lg">
-                    🌱
-                  </span>
-                  <span className="text-sm font-medium text-gray-900 lg:text-base">
-                    Sustainability Scores
-                  </span>
-                </div>
-
-                <div className="space-y-2 lg:space-y-3">
-                  <div>
-                    <div className="mb-1 flex justify-between text-xs lg:text-sm">
-                      <span>CARBON IMPACT</span>
-                      <span>85/100</span>
-                    </div>
-                    <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
-                      <div
-                        className="h-1.5 rounded-full lg:h-2"
-                        style={{ backgroundColor: "#36B37E", width: "85%" }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="mb-1 flex justify-between text-xs lg:text-sm">
-                      <span>RECYCLABILITY</span>
-                      <span>94/100</span>
-                    </div>
-                    <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
-                      <div
-                        className="h-1.5 rounded-full lg:h-2"
-                        style={{ backgroundColor: "#36B37E", width: "94%" }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="mb-1 flex justify-between text-xs lg:text-sm">
-                      <span>MATERIAL EFFICIENCY</span>
-                      <span>72/100</span>
-                    </div>
-                    <div className="h-1.5 w-full rounded-full bg-gray-200 lg:h-2">
-                      <div
-                        className="h-1.5 rounded-full lg:h-2"
-                        style={{ backgroundColor: "#36B37E", width: "72%" }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Floating RAG Chat Interface removed as it's now integrated */}
     </div>
   )
 }
